@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:localization/Bloc/LanguageBloc/language_bloc.dart';
 import 'Screen/HomeScreen.dart';
+import 'Screen/Screen2.dart';
 
 void main() {
   MultiBlocProvider appProviders = MultiBlocProvider(
@@ -25,14 +26,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Locale? locale;
     return BlocBuilder<LanguageBloc, LanguageState>(
       builder: (context, state) {
-
-        if(state is changed_lang){
-          locale = state.local;
-          print(locale.toString());
-        }
         return MaterialApp(
             title: 'Flutter Demo',
             navigatorKey: navigatorKey,
@@ -40,8 +35,8 @@ class MyApp extends StatelessWidget {
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               useMaterial3: true,
             ),
-            home: const HomeScreen(),
-            locale: locale,
+            home: const Screen2(),
+            locale: state.language,
             supportedLocales: AppLocalizations.supportedLocales,
             localizationsDelegates: AppLocalizations.localizationsDelegates
         );

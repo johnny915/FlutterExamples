@@ -12,21 +12,21 @@ const languagePrefsKey = 'languagePrefs';
 
 class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
 
-  LanguageBloc() : super(LanguageInitial()) {
+  LanguageBloc() : super(LanguageState(language: const Locale("en"))) {
 
     on<ChangeLanguage>((event, emit) async{
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(languagePrefsKey, event.key);
-         emit(changed_lang(local: Locale(event.key)));
+      emit(state.copyWith(Locale(event.key)));
     });
 
     on<GetLanguage>((event, emit) async{
       final prefs = await SharedPreferences.getInstance();
       final selectedLanguage = prefs.getString(languagePrefsKey);
       if( selectedLanguage!=null){
-        emit(changed_lang(local: Locale(selectedLanguage)));
+        emit(state.copyWith(Locale(selectedLanguage)));
       }else{
-        emit(changed_lang(local: const Locale("en")));
+        emit(state.copyWith(const Locale("en")));
       }
     });
 
